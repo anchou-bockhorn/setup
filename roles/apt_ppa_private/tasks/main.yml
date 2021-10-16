@@ -1,0 +1,8 @@
+- name: Add telegram ppa
+  command: add-apt-repository ppa:atareao/telegram -y
+
+- name: apt install telegram
+  apt:
+    name: telegram
+    update_cache: yes
+

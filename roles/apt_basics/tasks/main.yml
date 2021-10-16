@@ -1,11 +1,79 @@
-- name : Install vim
-  apt: name=vim state=present
+- name: Update apt cache
+  apt:
+    update_cache: yes
 
-- name : Install git
+- name: include unattended_upgrade task
+  include_tasks: unattended_upgrade.yml
+  tags: apt-basics, unattended-upgrade
+
+- name : Install vim
+  apt:
+    name: vim
+    state: present
+  tags: apt-basics
+
+- name : Install synclient
+  apt:
+    name: xserver-xorg-input-synaptics
+    state: present
+  tags: apt-basics
+
+- name: Install git
   apt: 
     name: git-all
     state: present
+  tags: apt-basics
 
-- name : Install chromium-browser
-  apt: name=chromium-browser state=present
+- name: set git user mail
+  shell: su -c "git config --global user.email \"{{ git_mail }}\"" {{ os_user }}
+  tags: apt-basics
 
+- name: set git user name
+  shell: su -c "git config --global user.name \"{{ git_name }}\"" {{ os_user }}
+  tags: apt-basics
+
+- name: set git config core.autocrlf false
+  shell: su -c "git config --global core.autocrlf false" {{ os_user }}
+  tags: apt-basics
+
+- name : Install curl
+  apt:
+    name: curl
+    state: present
+  tags: apt-basics
+
+- name : Install ca-certificates
+  apt:
+    name: ca-certificates
+    state: present
+  tags: apt-basics
+
+- name : Install gnupg
+  apt:
+    name: gnupg
+    state: present
+  tags: apt-basics
+
+- name : Install lsb-release
+  apt:
+    name: lsb-release
+    state: present
+  tags: apt-basics
+
+- name : Install net-tools
+  apt:
+    name: net-tools
+    state: present
+  tags: apt-basics
+
+- name: install snap
+  apt:
+    name: snapd
+    state: present
+  tags: apt-basics
+
+- name: install insomnia
+  snap:
+    name: insomnia
+    state: present
+  tags: apt-basics

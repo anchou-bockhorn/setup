@@ -4,6 +4,7 @@
     line: key <LCTL> {	[ Super_L		]	};
     insertbefore: '^};'
     firstmatch: yes
+  tags: config-keyboard
 
 - name: append ctrl mapping to /usr/share/X11/xkb/symbols/pc
   lineinfile:
@@ -11,6 +12,84 @@
     line: key <LWIN> {	[ Control_L		]	};
     insertbefore: '^};'
     firstmatch: yes
+  tags: config-keyboard
+
+- name: copy .Xmodmap
+  copy:
+    src: .Xmodmap
+    dest: /home/{{ os_user }}/
+    owner: "{{ os_user }}"
+    mode: '0444'
+  tags: config-keyboard
+
+- name: load .Xmodmap
+  lineinfile:
+    path: /home/{{ os_user }}/.bashrc
+    line: xmodmap .Xmodmap
+    insertafter: EOF
+  tags: config-keyboard
+
+- name: set vim as visual
+  lineinfile:
+    path: /home/{{ os_user }}/.bashrc
+    line: export VISUAL=vim
+    insertafter: EOF
+  tags: config-os
+
+- name: set vim as editor
+  lineinfile:
+    path: ~/.bashrc
+    line: export EDITOR="$VISUAL"
+    insertafter: EOF
+  tags: config-os
+
+- name: minimize right click bottom area for lenovo
+  lineinfile:
+    path: /home/{{ os_user }}/.bashrc
+    line: synclient RightButtonAreaTop=700
+    insertafter: EOF
+  tags: config-os
+
+- name: minimize right click right area for lenovo
+  lineinfile:
+    path: /home/{{ os_user }}/.bashrc
+    line: synclient RightButtonAreaLeft=1100
+    insertafter: EOF
+  tags: config-os
+
+- name: disable keybindings
+  shell: gsettings set org.gnome.desktop.wm.keybindings {{ item }} "['']"
+  become_user: "{{ os_user }}"
+  loop: "{{ toDisable }}"
+  tags: config-keyboard
 
 - name: clear xkb settings cache
   command: rm -rf /var/lib/xkb/*
+  tags: config-ssh
+
+- name: create .ssh folder
+  file:
+    path: /home/{{ os_user }}/.ssh
+    state: directory
+    mode: '0755'
+  tags: config-ssh
+
+- name: copy private key
+  copy:
+    src: id_rsa_{{ os_user }}
+    dest: /home/{{ os_user }}/.ssh/id_rsa
+    owner: "{{ os_user }}"
+    mode: 0400
+  tags: config-ssh
+
+- name: copy pub key
+  copy:
+    src: id_rsa_{{ os_user }}.pub
+    dest: /home/{{ os_user }}/.ssh/id_rsa.pub
+  tags: config-ssh
+
+- name: configure touchpad no tab to click
+  become_user: "{{ os_user }}"
+  shell: gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click false
+  tags: config-touchpad
+

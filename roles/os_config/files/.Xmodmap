@@ -1,0 +1,11 @@
+keycode  15 = 6 asciicircum asciicircum asciicircum
+keycode  18 = 9 parenleft 9 parenleft leftsinglequotemark breve
+keycode  19 = 0 parenright 0 parenright rightsinglequotemark
+keycode  20 = minus underscore minus underscore macron
+keycode  21 = equal plus equal plus doubleacute
+keycode  47 = semicolon colon semicolon colon ogonek diaeresis
+keycode  48 = apostrophe quotedbl acute diaeresis apostrophe quotedbl
+keycode  49 = asciitilde grave asciitilde
+keycode  59 = comma less comma less cedilla caron
+keycode  60 = period greater period greater abovedot
+keycode  61 = slash question slash question

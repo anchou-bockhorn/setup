@@ -1,0 +1,75 @@
+- name: Add docker Apt signing key to a
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+  tags: install-docker,abraxas
+
+- name: Register distro
+  shell: lsb_release -cs
+  ignore_errors: yes
+  register: distro
+  tags: install-docker,abraxas
+
+- name: Register dpkgArchitecture
+  shell: dpkg --print-architecture
+  ignore_errors: yes
+  register: dpkgArch
+  tags: install-docker,abraxas
+
+- name: Creating /etc/apt/sources.list.d/docker.list
+  copy:
+    dest: /etc/apt/sources.list.d/docker.list
+    content: |
+      deb [arch={{ dpkgArch.stdout }} signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ distro.stdout }} stable
+  tags: install-docker,abraxas
+
+- name : Install docker-ce
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+  tags: install-docker,abraxas
+
+- name : Install docker-ce-cli
+  apt:
+    name: docker-ce-cli
+    state: present
+  tags: install-docker,abraxas
+
+- name : Install containerd.io
+  apt:
+    name: containerd.io
+    state: present
+  tags: install-docker,abraxas
+
+- name: os type
+  shell: uname -s
+  ignore_errors: yes
+  register: os_type
+  tags: install-docker,abraxas
+
+- name: architecture
+  shell: uname -m
+  ignore_errors: yes
+  register: architecture
+  tags: install-docker,abraxas
+
+- name: download docker-compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-{{ os_type.stdout }}-{{ architecture.stdout }}
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
+  tags: install-docker,abraxas
+
+- name: set permissions for docker-compose
+  file:
+    path: /usr/local/bin/docker-compose
+    mode: 0755
+    owner: "{{ os_user }}"
+  tags: install-docker,abraxas
+
+- name: add user to group docker
+  user:
+    name: '{{ os_user }}'
+    groups: docker
+    append: yes

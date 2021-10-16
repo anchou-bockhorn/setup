@@ -20,12 +20,3 @@
 
 - name: Install Google Chrome
   apt: pkg=google-chrome-stable state=present
-
-- name: Add telegram ppa
-  command: add-apt-repository ppa:atareao/telegram -y
-
-- name: apt install telegram
-  apt:
-    name: telegram
-    update_cache: yes
-

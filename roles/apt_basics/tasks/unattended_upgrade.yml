@@ -1,0 +1,11 @@
+- name : Install unattended-upgrades
+  apt:
+    name: unattended-upgrades
+    state: present
+  tags: apt-basics, unattended-upgrade
+
+- name : Install update-notifier-common
+  apt:
+    name: update-notifier-common
+    state: present
+  tags: apt-basics, unattended-upgrade

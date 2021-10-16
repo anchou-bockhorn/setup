@@ -1,0 +1,12 @@
+toDisable:
+  - begin-resize
+  - switch-to-workspace-left
+  - switch-to-workspace-right
+  - switch-to-workspace-up
+  - switch-to-workspace-down
+  - begin-move
+  - move-to-workspace-right
+  - move-to-workspace-left
+  - toggle-maximized
+  - move-to-workspace-down
+  - move-to-workspace-up

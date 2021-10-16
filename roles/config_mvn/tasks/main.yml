@@ -1,0 +1,19 @@
+- name: include work_secrets
+  include_vars: work_secrets.yml.{{ os_user}}
+  tags: config-mvn,abraxas
+
+- name: ensure ~/.m2 exists
+  file:
+    path: /home/{{ os_user }}/.m2
+    state: directory
+    mode: 0755
+    owner: "{{ os_user }}"
+  tags: config-mvn,abraxas
+
+- name: copy maven settings.xml to ~/.m2
+  template:
+    dest: /home/{{ os_user }}/.m2/settings.xml
+    src: mvn_settings.xml.j2
+    owner: "{{ os_user }}"
+    mode: 0755
+  tags: config-mvn,abraxas

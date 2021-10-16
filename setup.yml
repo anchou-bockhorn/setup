@@ -1,17 +1,25 @@
 ---
 
-  - name: playing with Ansible and Git
-    hosts: localhost
-    connection: local 
-    become: yes
-    become_method: sudo
-    vars:
+- name: setup developer os
+  hosts: localhost
+  connection: local
+  become: yes
+  become_method: sudo
+  vars:
+    - os_user: chou
+    - git_mail: anchou.bockhorn@gmail.com
+    - git_name: Anchou
+
     - intellij_edition: ultimate
-    roles:
-    - apt_basics
-    - apt_ppa
-    - os_config 
-#    - facts_intellij
+  roles:
+    - apt_ppa_common
+    - os_config
     - { role: 'install jdk' }
-    - { role: 'intellij role' }
     - { role: 'maven role' }
+    - { role: 'intellij role' }
+    - apt_basics
+    - apt_ppa_private
+    - apt_basics
+    - work_os_config
+    - config_mvn
+    - install_docker
