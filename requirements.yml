@@ -1,0 +1,8 @@
+- name: install jdk
+  src: https://github.com/infOpen/ansible-role-openjdk-jdk.git
+
+- name: intellij role
+  src: https://github.com/gantsign/ansible-role-intellij.git
+
+- name: maven role
+  src: https://github.com/gantsign/ansible-role-maven.git

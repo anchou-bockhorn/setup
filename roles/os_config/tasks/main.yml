@@ -1,0 +1,16 @@
+- name: append super mapping to /usr/share/X11/xkb/symbols/pc
+  lineinfile:
+    path: /usr/share/X11/xkb/symbols/pc
+    line: key <LCTL> {	[ Super_L		]	};
+    insertbefore: '^};'
+    firstmatch: yes
+
+- name: append ctrl mapping to /usr/share/X11/xkb/symbols/pc
+  lineinfile:
+    path: /usr/share/X11/xkb/symbols/pc
+    line: key <LWIN> {	[ Control_L		]	};
+    insertbefore: '^};'
+    firstmatch: yes
+
+- name: clear xkb settings cache
+  command: rm -rf /var/lib/xkb/*

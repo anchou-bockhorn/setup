@@ -1,0 +1,17 @@
+---
+
+  - name: playing with Ansible and Git
+    hosts: localhost
+    connection: local 
+    become: yes
+    become_method: sudo
+    vars:
+    - intellij_edition: ultimate
+    roles:
+    - apt_basics
+    - apt_ppa
+    - os_config 
+#    - facts_intellij
+    - { role: 'install jdk' }
+    - { role: 'intellij role' }
+    - { role: 'maven role' }

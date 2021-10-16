@@ -1,0 +1,11 @@
+- name : Install vim
+  apt: name=vim state=present
+
+- name : Install git
+  apt: 
+    name: git-all
+    state: present
+
+- name : Install chromium-browser
+  apt: name=chromium-browser state=present
+
