@@ -1,9 +1,3 @@
-kubectl -n dev-steuern-polaris port-forward issues-backend-7458cfffb8-mdl8h 5005
-kubectl get pods -n dev-steuern-polaris
-cd kafka/src/main/resources/dev/kafka/
 sudo docker-compose up
 mvn install -DskipTests
 nmcli dev wifi rescan
-mvn quarkus:dev -Ddebug=5002 -DSECURE_CONNECT_SERVICE_USER_NAME=STA-POLARIS -DSECURE_CONNECT_SERVICE_USER_PASS='{{ secure_connect_password }}' -f pom.xml
-echo 'Enter Single Sign On Password\n' && export CI_NEXUS_MAVEN_USER={{ sso_name }} && read -s CI_NEXUS_MAVEN_PASS && export CI_NEXUS_MAVEN_PASS && /opt/idea/idea-ultimate-*/bin/idea.sh
-sudo apt install ansible -y && sudo apt install git -y && ansible-galaxy install -r requirements.yml && ansible-galaxy install -r requirements.yml && ansible-playbook common_setup.yml --ask-vault-pass && ansible-playbook work_setup.yml --ask-vault-pass
