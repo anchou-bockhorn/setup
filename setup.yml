@@ -22,3 +22,4 @@
     - apt_basics
     - work_os_config
     - install_docker
+    - deb_packages
