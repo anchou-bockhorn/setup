@@ -18,6 +18,6 @@
 * Installation des Workstation Setups starten in der bash:
 ```
  ansible-galaxy install -r requirements.yml \
- && sudo echo "enter sudo password" \
+ && sudo echo "" \
  && ansible-playbook setup.yml --ask-vault-pass --skip-tags map-keys,config-touchpad
 ```
